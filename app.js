@@ -1,14 +1,16 @@
+// JavaScript Document
 const express = require('express');
+
 const app = express();
 
-//two param: path and callback function
-app.get('/', (request, response) => {
-    response.send(`Hey dere world`);
+app.get('/', (req, res) => {
+	res.send(`Hello world!`);
 });
 
-app.get('/about', (request, response) => {
-    response.send(`I like long walks on the beach.`);
-});
+app.get('/about',(req, res) =>{
+	res.send(`I like long wals on the beach.`);
+})
 
-const port = (process.env.PORT || 4000);
-app.listen(port, () => console.log(`Listening on ${post}`));
+const port = (process.env.PORT || 4000)
+
+app.listen(port,() => console.log(`Listening on ${port}`));
