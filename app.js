@@ -1,15 +1,15 @@
 // JavaScript Document
 const express = require('express');
+const path = require('path');
 
 const app = express();
 
-app.get('/', (req, res) => {
-	res.send(`Hello world!`);
-});
-
-app.get('/about',(req, res) =>{
-	res.send(`I like long wals on the beach.`);
-})
+//Our views path
+app.set('view', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+//Our routes
+const routes = require('./routes.js');
+app.use('/', routes);
 
 const port = (process.env.PORT || 4000)
 
