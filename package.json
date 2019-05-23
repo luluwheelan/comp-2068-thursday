@@ -1,0 +1,23 @@
+{
+  "name": "comp-2068-thursday",
+  "version": "1.0.0",
+  "description": "Build a blog",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luluwheelan/comp-2068-thursday.git"
+  },
+  "author": "Lulu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luluwheelan/comp-2068-thursday/issues"
+  },
+  "homepage": "https://github.com/luluwheelan/comp-2068-thursday#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
