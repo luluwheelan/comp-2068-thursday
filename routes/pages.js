@@ -1,7 +1,7 @@
 const router = require(`express`).Router();
 
 //Our controllers
-const PageController = require('../controller/pagesController');
+const PageController = require('../controllers/pagesController');
 
 
 
