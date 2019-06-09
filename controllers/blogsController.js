@@ -1,12 +1,12 @@
-const Book = require('../models/book');
+const Blog = require('../models/blog');
 
 exports.index = (req, res) => {
-    Book.find()
-    .then(books => {
+    Blog.find()
+    .then(blogs => {
         //deliever the data to the view
-        res.render('books/index', {
-            books: books,
-            title: 'Book List'
+        res.render('blogs/index', {
+            blogs: blogs,
+            title: 'Archive'
         });
     })
     .catch(err => {
@@ -15,11 +15,11 @@ exports.index = (req, res) => {
 };
 
 exports.show = (req, res) => {
-    Book.findById(req.params.id)
+    Blog.findById(req.params.id)
     .then(blog => {
-        res.render('books/show', {
-            book: book,
-            title: book.title
+        res.render('blogs/show', {
+            blog: blog,
+            title: blog.title
         });
     })
     .catch(err => {
@@ -28,18 +28,18 @@ exports.show = (req, res) => {
 };
 
 exports.new = (req, res) => {
-    res.render('books/new', {
-        title: 'New Book Post'
+    res.render('blogs/new', {
+        title: 'New Blog Post'
     });
 };
 
 //edit and show almost the some, they use same form
 exports.edit = (req, res) => {
-    Book.findById(req.params.id)
-    .then(book => {
-        res.render('books/edit', {
-            book: book,
-            title: books.title
+    Blog.findById(req.params.id)
+    .then(blog => {
+        res.render('blogs/edit', {
+            blog: blog,
+            title: blog.title
         });
     })
     .catch(err => {
@@ -48,8 +48,8 @@ exports.edit = (req, res) => {
 };
 
 exports.create = (req, res) => {
-    Book.create(
-        req.body.book
+    Blog.create(
+        req.body.blog
     //     {
     //     title: req.body.blog.title,
     //     content: req.body.blog.content,
@@ -58,7 +58,7 @@ exports.create = (req, res) => {
     )
     .then(() => {
         //no render from post!!!!! But redirect to other page
-        res.redirect('/books');
+        res.redirect('/blogs');
     })
     .catch(err => {
         console.error(`ERROR: ${err}`);
@@ -66,13 +66,13 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    Book.updateOne({
+    Blog.updateOne({
         _id: req.body.id
-    }, req.body.book, {
+    }, req.body.blog, {
         runValidators: true
     })
     .then(() => {
-        res.redirect(`/books/${req.body.id}`);
+        res.redirect(`/blogs/${req.body.id}`);
     })
     .catch(err => {
         console.error(`ERROR: ${err}`);
@@ -80,11 +80,11 @@ exports.update = (req, res) => {
 };
 
 exports.destroy = (req, res) => {
-    Book.deleteOne({ 
+    Blog.deleteOne({ 
         _id: req.body.id
     })
     .then(() => {
-        res.redirect("/books");
+        res.redirect("/blogs");
     })
     .catch(err => {
         console.error(`ERROR: ${err}`);

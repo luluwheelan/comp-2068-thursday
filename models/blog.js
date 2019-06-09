@@ -1,23 +1,23 @@
 const mongoose = require('mongoose');
 
 
-//Our Schema - book model
-const BookSchema = new mongoose.Schema({
+//Our Schema - bolg model
+const BlogSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
-    author: {
+    content: {
         type: String,
         required: false
     },
     status: {
         type: String,
-        enum: ['Yes', 'Not'],
-        default: 'Have'
+        enum: ['DRAFT', 'PUBLISHED'],
+        default: 'DRAFT'
     }
 }, {
     timestamps: true
 });
 
-module.exports = mongoose.model('Book', BookSchema);
+module.exports = mongoose.model('Blog', BlogSchema);
