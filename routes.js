@@ -4,12 +4,12 @@ const app = express();
 
 //Import our Page Routes
 const pageRoutes = require('./routes/pages');
-const blogRoutes = require('./routes/blogs');
+const bookRoutes = require('./routes/books');
 
 
 //Register our Page Routes with our app
 app.use('/', pageRoutes);
-app.use('/blogs', blogRoutes);
+app.use('/books', bookRoutes);
 
 //Export our changes
 module.exports = app;
