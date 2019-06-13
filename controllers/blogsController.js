@@ -10,7 +10,8 @@ exports.index = (req, res) => {
         });
     })
     .catch(err => {
-        console.error(`ERROR: ${err}`);
+        req.flash('error', `ERROR: ${err}`);
+        res.redirect('/');
     });
 };
 
@@ -23,10 +24,10 @@ exports.show = (req, res) => {
         });
     })
     .catch(err => {
-        console.error(`ERROR: ${err}`);
+        req.flash('error', `ERROR: ${err}`);
+        res.redirect('/');
     });
 };
-
 exports.new = (req, res) => {
     res.render('blogs/new', {
         title: 'New Blog Post'
@@ -39,11 +40,12 @@ exports.edit = (req, res) => {
     .then(blog => {
         res.render('blogs/edit', {
             blog: blog,
-            title: blog.title
+            title: `Edit ${blog.title}`
         });
     })
     .catch(err => {
-        console.error(`ERROR: ${err}`);
+        req.flash('error', `ERROR: ${err}`);
+        res.redirect('/blogs');
     });
 };
 
@@ -58,10 +60,15 @@ exports.create = (req, res) => {
     )
     .then(() => {
         //no render from post!!!!! But redirect to other page
+        req.flash('success', 'Your new blog was create successfully.')
         res.redirect('/blogs');
     })
     .catch(err => {
-        console.error(`ERROR: ${err}`);
+        req.flash('error', `ERROR: ${err}`);
+        res.render('blogs/new', {
+            blog: req.body.blog,
+            title: 'New Blog'
+        });
     });
 };
 
@@ -72,10 +79,16 @@ exports.update = (req, res) => {
         runValidators: true
     })
     .then(() => {
-        res.redirect(`/blogs/${req.body.id}`);
+       // res.redirect(`/blogs/${req.body.id}`);
+        req.flash('success', 'Your new blog was updated successfully.')
+        res.redirect('/blogs');
     })
     .catch(err => {
-        console.error(`ERROR: ${err}`);
+        req.flash('error', `ERROR: ${err}`);
+        res.render('blogs/edit', {
+            blog: req.body.blog,
+            title: `Edit ${req.body.blog.title}`
+        });
     });
 };
 
@@ -84,14 +97,40 @@ exports.destroy = (req, res) => {
         _id: req.body.id
     })
     .then(() => {
+        req.flash('success', 'Your blog was deleted successfully.');
         res.redirect("/blogs");
     })
     .catch(err => {
-        console.error(`ERROR: ${err}`);
+        req.flash('error', `ERROR: ${err}`);
+        res.redirect('/blogs');
     });
 };
 
 
-//To fill in later
-exports.drafts = (req, res) => {};
-exports.published = (req, res) => {};
+
+exports.drafts = (req, res) => {
+    Blog.find().draft()
+    .then(draft => {
+        res.render('blog/index', {
+            title: 'Draft',
+            blogs: drafts
+        });
+    })
+    .catch(err => {
+        req.flash('error', `ERROR: ${err}`);
+        res.redirect('/blogs');
+    });
+};
+exports.published = (req, res) => {
+    Blog.find().published()
+    .then(published => {
+        res.render('blog/index', {
+            title: 'Published',
+            blogs: published
+        });
+    })
+    .catch(err => {
+        req.flash('error', `ERROR: ${err}`);
+        res.redirect('/blogs');
+    });
+};
