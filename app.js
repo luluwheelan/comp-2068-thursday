@@ -25,23 +25,24 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 app.use(cookieParser());
+
 app.use(session({
-    secret: (process.env.secret || 'lulu'),
-    cookie: {
-        max: 10800000 //cookies age
-    },
-    resave: true,
-    saveUninitialized: true
+  secret: (process.env.secret || 'boorakacha'),
+  cookie: {
+    max: 10800000
+  },
+  resave: true,
+  saveUninitialized: true
 }));
 
 app.use(flash());
 app.use((req, res, next) => {
-    res.locals.flash = res.locals.flash || {};
-    res.locals.success = req.flash('sucess') || null;
-    res.locals.flash.error = req.flash('error') || null;
+  res.locals.flash = res.locals.flash || {};
+  res.locals.flash.success = req.flash('success') || null;
+  res.locals.flash.error = req.flash('error') || null;
 
-    next;
-})
+  next();
+});
 //Body Parser
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
