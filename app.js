@@ -19,6 +19,29 @@ const path = require('path');
 
 const app = express();
 
+//Adding cookies and sessions support to our app
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const flash = require('connect-flash');
+
+app.use(cookieParser());
+app.use(session({
+    secret: (process.env.secret || 'lulu'),
+    cookie: {
+        max: 10800000 //cookies age
+    },
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.flash = res.locals.flash || {};
+    res.locals.success = req.flash('sucess') || null;
+    res.locals.flash.error = req.flash('error') || null;
+
+    next;
+})
 //Body Parser
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
