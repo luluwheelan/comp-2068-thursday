@@ -34,8 +34,6 @@ app.use(session({
   },
   resave: true,
   saveUninitialized: true
-
-
 }));
 
 app.use(flash());
@@ -45,7 +43,7 @@ app.use((req, res, next) => {
   res.locals.flash.success = req.flash('success') || null;
   res.locals.flash.error = req.flash('error') || null;
 
-  next();
+  next(); //comtiniue one to the next
 });
 
 //Body Parser
@@ -64,7 +62,23 @@ app.use('/js', express.static('assets/javascripts'));
 app.use('/images', express.static('assets/images')); 
 
 
-//Our routes
+//Authenticated helpers
+const isAuthenticated = (req) => {
+  return req.session && req.session.userId;
+};
+app.use((req, res, next) => {
+  req.isAuthenticated = () => {
+    if (!isAuthenticated(req)) {
+      req.flash('error', `You are not permitted to do this action.`);
+      res.redirect('/');
+    }
+  }
+
+  res.locals.isAuthenticated = isAuthenticated(req);
+  next();
+});
+
+//Our routes. Need make sure this is at the buttom of the page
 const routes = require('./routes.js');
 app.use('/', routes);
 

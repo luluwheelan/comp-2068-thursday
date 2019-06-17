@@ -46,10 +46,34 @@ body {
   color: #0056b3;
 }
 
-<<<<<<< HEAD
-.flash {
-=======
+
 .flash{
->>>>>>> 1782a15aff03ad6b6496fb780a7e4b6521d910d4
   margin-top: 60px;
 }
+
+.nav-destroy > input[tytpe="submit"]{
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: rgba(0, 0, 0, 0.5);
+  display: block;
+  padding: .5rem 0.5rem;
+
+}
+
+
+.nav-destroy>input[type="submit"]{
+  padding-right:.5rem;
+  padding-left:.5rem;
+}
+
+
+.nav-destroy:hover > input[type="submit"]{
+  color: rgba(0, 0, 0, .7);
+}
+
+@media (min-width:992px) {
+
+}
+

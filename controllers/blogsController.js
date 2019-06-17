@@ -1,7 +1,11 @@
 const Blog = require('../models/blog');
 
 exports.index = (req, res) => {
-    Blog.find()
+  req.isAuthenticated();
+    Blog.find({
+      author: req.session.userId
+    })
+    .populate('author')
       .then(blogs => {
         res.render('blogs/index', {
           blogs: blogs,
@@ -15,10 +19,48 @@ exports.index = (req, res) => {
       });
   };
   
+  exports.drafts = (req, res) => {
+    req.isAuthenticated();
+    Blog.find({
+      author: req.session.userId
+    }).drafts()
+      .then(blogs => {
+        res.render('blogs/index', {
+          blogs: blogs,
+          title: 'Drafts'
+        });
 
+      })
+      .catch(err => {
+        req.flash('error', `ERROR: ${err}`);
+        res.redirect('/');
+      });
+  };
+
+  exports.published = (req, res) => {
+    req.isAuthenticated();
+    Blog.find({
+      author: req.session.userId
+    }).published()
+      .then(blogs => {
+        res.render('blogs/index', {
+          blogs: blogs,
+          title: 'Published'
+        });
+
+      })
+      .catch(err => {
+        req.flash('error', `ERROR: ${err}`);
+        res.redirect('/');
+      });
+  };
 
   exports.show = (req, res) => {
-    Blog.findById(req.params.id)
+    req.isAuthenticated();
+    Blog.findOne({
+      _id: req.params.id,
+      author: req.session.userId
+    })
       .then(blog => {
         res.render('blogs/show', {
           title: blog.title,
@@ -33,6 +75,7 @@ exports.index = (req, res) => {
   };
 
   exports.new = (req, res) => {
+    req.isAuthenticated();
 
     res.render('blogs/new', {
       title: 'New Blog Post'
@@ -41,7 +84,11 @@ exports.index = (req, res) => {
 
 //edit and show almost the some, they use same form
 exports.edit = (req, res) => {
-    Blog.findById(req.params.id)
+  req.isAuthenticated();
+  Blog.findOne({
+    _id: req.params.id,
+    author: req.session.userId
+  })
       .then(blog => {
         res.render('blogs/edit', {
 
@@ -57,6 +104,8 @@ exports.edit = (req, res) => {
 
 
 exports.create = (req, res) => {
+  req.isAuthenticated();
+  req.body.blog.author = req.session.userId;
     Blog.create(
         req.body.blog
     //     {
@@ -68,7 +117,6 @@ exports.create = (req, res) => {
     .then(() => {
         req.flash('success', 'Your new blog was created successfully.')
         //no render from post!!!!! But redirect to other page
-        req.flash('success', 'Your new blog was create successfully.')
         res.redirect('/blogs');
     })
     .catch(err => {
@@ -83,8 +131,10 @@ exports.create = (req, res) => {
 
 
   exports.update = (req, res) => {
+    req.isAuthenticated();
     Blog.updateOne({
-        _id: req.body.id
+        _id: req.body.id,
+        author:req.session.userId
       }, req.body.blog, {
         runValidators: true
       })
@@ -106,8 +156,10 @@ exports.create = (req, res) => {
 };
 
 exports.destroy = (req, res) => {
+  req.isAuthenticated();
     Blog.deleteOne({
-        _id: req.body.id
+        _id: req.body.id,
+        author: req.session.userId
 
       })
       .then(() => {
@@ -123,7 +175,10 @@ exports.destroy = (req, res) => {
 
 //To fill in later
 exports.drafts = (req, res) => {
-    Blog.find().drafts()
+  req.isAuthenticated();
+    Blog.find({
+      author: req.session.userId
+    }).drafts()
       .then(drafts => {
         res.render('blogs/index', {
           title: 'Drafts',
@@ -137,7 +192,11 @@ exports.drafts = (req, res) => {
   };
   
   exports.published = (req, res) => {
-    Blog.find().published()
+    req.isAuthenticated();
+    
+    Blog.find({
+      author: req.session.userId
+    }).published()
       .then(published => {
         res.render('blogs/index', {
           title: 'Published',
