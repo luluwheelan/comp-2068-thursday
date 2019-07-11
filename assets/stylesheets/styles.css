@@ -51,7 +51,7 @@ body {
   margin-top: 60px;
 }
 
-.nav-destroy > input[tytpe="submit"]{
+.nav-destroy>input[type="submit"]{
   margin: 0;
   padding: 0;
   background: none;
@@ -63,17 +63,14 @@ body {
 }
 
 
-.nav-destroy>input[type="submit"]{
-  padding-right:.5rem;
-  padding-left:.5rem;
-}
-
-
 .nav-destroy:hover > input[type="submit"]{
   color: rgba(0, 0, 0, .7);
 }
 
 @media (min-width:992px) {
-
+  .nav-destroy>input[type="submit"]{
+    padding-right:.5rem;
+    padding-left:.5rem;
+  }
 }
 

@@ -2,6 +2,7 @@
 require('dotenv').config();
 
 //Mongoose
+//when require any library, need create a instance and then use it
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_URI, {
     auth: {
@@ -20,6 +21,7 @@ const path = require('path');
 const app = express();
 
 //Adding cookies and sessions support to our app
+//Middle ware register
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('connect-flash');

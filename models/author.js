@@ -21,7 +21,7 @@ const AuthorSchema = new mongoose.Schema({
     }
 }, {timestamps: true});
 
-//VIRTUAL PROPERTY (will not work on database)
+//VIRTUAL PROPERTY (This will not go on database)
 AuthorSchema.virtual('passwordConfirmation')
   .get(() => this.passwordConfirmation)
   .set((value) => this.passwordConfirmation = value);
