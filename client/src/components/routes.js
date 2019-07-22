@@ -5,7 +5,6 @@ import Home from "./pages/home";
 import About from "./pages/about";
 import Contact from "./pages/contact";
 
-
 function Routes() {
   return (
     <Switch>
@@ -17,3 +16,4 @@ function Routes() {
 }
 
 export default Routes;
+
