@@ -5,7 +5,7 @@ const router = require('express').Router();
 const AuthorsController = require('../controllers/authorsController');
 
 // Our routes
-router.get(`/new`, AuthorsController.new);
+//router.get(`/new`, AuthorsController.new);
 router.post('/', AuthorsController.create);
 
 // We have to export our changes

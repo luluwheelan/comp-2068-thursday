@@ -1,21 +1,9 @@
-const Author = require('../models/author');
-
-
-exports.new = (req, res) => {
-  res.render('authors/new', {
-    title: `New Author`
-  });
-};
-
+const Author = require("../models/author");
 
 exports.create = (req, res) => {
   Author.create(req.body.author)
-    .then(() => {
-      req.flash('success', 'Your are now registered.');
-      res.redirect('/login');
-    })
-    .catch(err => {
-      req.flash('error', `ERROR: ${err}`);
-      res.redirect('/authors/new');
-    });
+    .then(() =>
+      res.status(201).send({ success: "Author was created successfully" })
+    )
+    .catch(err => res.status(400).send(err));
 };
