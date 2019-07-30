@@ -2,6 +2,7 @@ const Author = require("../models/author");
 const jwt = require("jsonwebtoken");
 
 exports.authenticate = (req, res) => {
+  console.log(req.body);
   Author.findOne({
     email: req.body.email
   })
@@ -16,13 +17,17 @@ exports.authenticate = (req, res) => {
           const token = jwt.sign({ payload: req.body.email }, "bobthebuilder", {
             expiresIn: "1h"
           });
-          res.cookie("token", token, { httpOnly: true });
+          res
+            .cookie("token", token, { httpOnly: true })
+            .status(201)
+            .send({ success: "You were authenticated you wonderful human." });
         } else {
           res.status(401).json(err);
         }
       });
     })
     .catch(err => {
+      console.log("Not match", err);
       res.status(401).json(err);
     });
 };

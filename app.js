@@ -59,16 +59,20 @@ app.use(
 //End Parser
 
 //Authenticated helpers
-const jwt = require('jsonwebtoken');
-const isAuthenticated = (req) => {
-  const token = req.cookies.token || req.body.token || req.query.token || req.headers['x-access-token'];
+const jwt = require("jsonwebtoken");
+const isAuthenticated = req => {
+  const token =
+    (req.cookies && req.cookies.token) ||
+    (req.body && req.body.token) ||
+    (req.query && req.query.token) ||
+    (req.header && req.headers["x-access-token"]);
 
   if (req.session.userId) return true;
 
   if (!token) {
     return false;
   } else {
-    jwt.verify(token, "bobthebuilder", function (err, decoded) {
+    jwt.verify(token, "bobthebuilder", function(err, decoded) {
       if (err) {
         return false;
       } else {
@@ -84,7 +88,7 @@ app.use((req, res, next) => {
     }
 
     return true;
-  }
+  };
 
   res.locals.isAuthenticated = isAuthenticated(req);
   next();

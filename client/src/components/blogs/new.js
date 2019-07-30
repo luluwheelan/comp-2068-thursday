@@ -1,12 +1,39 @@
 import React, { useState } from "react"; //usestate is hook module used for functional component
 import { Redirect } from "react-router-dom";
+import Axios from "axios";
 
 function New() {
   const [inputs, setInputs] = useState({}); //{} is the start default inputs value,here is empty
   const [redirect, setRedirect] = useState(false);
 
-  function handleSubmit(event) {}
-  function handleInputChange(event) {}
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    Axios.post("/api/blogs", {
+      blog: {
+        title: inputs.title,
+        content: inputs.content,
+        status: inputs.status
+      }
+    })
+    .then(resp => setRedirect(true))
+    .catch(err => console.log(err));
+  }
+
+  function handleInputChange(event) {
+    event.persist();
+    // const name = event.target.name;
+    // const value = event.target.value;
+
+    //this line of code works the same as top two lines
+    const { name, value } = event.target;
+
+    setInputs(inputs => {
+        inputs[name] = value;
+        return inputs;
+    });
+    console.log(inputs);
+  }
 
   if (redirect) return <Redirect to="/blogs" />;
   return (
@@ -43,7 +70,7 @@ function New() {
               onChange={handleInputChange}
             >
               <option value="DRAFT">draft</option>
-              <option value="PUBLOSHED">published</option>
+              <option value="PUBLISHED">published</option>
             </select>
           </div>
           <div className="form-group">
