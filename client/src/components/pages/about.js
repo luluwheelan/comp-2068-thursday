@@ -34,7 +34,8 @@ function About() {
         <div className="col-sm-9">
           <h3>Craig </h3>
           <p>
-            
+            Craig is a computer programmer student from Georgian. Craig interested in Machine learning. He is currently learning Octave and MATLAB. 
+			He wants to take further education in future.
           </p>
         </div>
       </div>
