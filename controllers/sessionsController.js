@@ -33,7 +33,11 @@ exports.authenticate = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  req.session.userId = null;
-  req.flash("success", "You are logged out");
-  res.redirect("/");
+  if (!req.isAuthenticated)
+    Response.status(401).send({ error: "Could not authenticated" });
+  res.session.userId = null;
+  res
+    .clearCookie("token")
+    .status(200)
+    .send({ success: "You are now logged out" });
 };

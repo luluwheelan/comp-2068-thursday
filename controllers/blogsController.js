@@ -52,7 +52,7 @@ exports.show = (req, res) => {
   })
     .published()
     .populate("author")
-    .then(blog => res, json(blog))
+    .then(blog => res.json(blog))
     .catch(err => res.status(401).send(err));
 };
 
