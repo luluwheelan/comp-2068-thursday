@@ -71,6 +71,7 @@ exports.edit = (req, res) => {
 exports.create = (req, res) => {
   if (!req.isAuthenticated())
     return res.status(401).send({ error: "Sign in idget" });
+    console.log(req.body);
   req.body.blog.author = req.session.userId;
   Blog.create(req.body.blog)
     .then(() => {

@@ -33,9 +33,10 @@ exports.authenticate = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  if (!req.isAuthenticated)
+  if (!req.isAuthenticated())
     Response.status(401).send({ error: "Could not authenticated" });
-  res.session.userId = null;
+
+  req.session.userId = null;
   res
     .clearCookie("token")
     .status(200)
