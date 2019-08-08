@@ -17,4 +17,6 @@ function Notifier() {
   return null;
 }
 
+//nothing
+
 export default Notifier;
