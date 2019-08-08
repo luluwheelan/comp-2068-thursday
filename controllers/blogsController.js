@@ -15,16 +15,8 @@ exports.drafts = (req, res) => {
     author: req.session.userId
   })
     .drafts()
-    .then(blogs => {
-      res.render("blogs/index", {
-        blogs: blogs,
-        title: "Drafts"
-      });
-    })
-    .catch(err => {
-      req.flash("error", `ERROR: ${err}`);
-      res.redirect("/");
-    });
+    .then(blogs => res.json(blogs))
+    .catch(err => res.status(404).send(err));
 };
 
 exports.published = (req, res) => {
@@ -34,16 +26,8 @@ exports.published = (req, res) => {
     author: req.session.userId
   })
     .published()
-    .then(blogs => {
-      res.render("blogs/index", {
-        blogs: blogs,
-        title: "Published"
-      });
-    })
-    .catch(err => {
-      req.flash("error", `ERROR: ${err}`);
-      res.redirect("/");
-    });
+    .then(blogs => res.json(blogs))
+    .catch(err => res.status(404).send(err));
 };
 
 exports.show = (req, res) => {

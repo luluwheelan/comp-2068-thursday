@@ -1,27 +1,49 @@
-import React, { useState } from "react"; //this is the example of destruction
+import React, { useState, useContext } from "react"; //this is the example of destruction
 import { Redirect } from "react-router-dom";
 import Axios from "axios";
+import NotificationContext from "../components/notification_context";
 
 function Login() {
   const [inputs, setInputs] = useState({});
   const [redirect, setRedirect] = useState(false);
+  const { setNotification } = useContext(NotificationContext);
 
   function handleSubmit(event) {
-      event.preventDefault();
+    event.preventDefault();
 
-      Axios.post("/api/authenticate", inputs)
-      .then(resq => setRedirect(true))
-      .catch(err => console.log(err));
+    Axios.post("/api/authenticate", inputs)
+    .then((result) => {
+
+      setInputs({}); // clear the data
+      setNotification(notification => {
+        return {
+          ...notification,
+          status: "success",
+          message: "You have successfully logged in"
+        };
+      });
+        setRedirect(true);
+      })
+      .catch(err => {
+        setNotification(notification => {
+          return{
+            ...notification,
+            status:"DANGER",
+            message: "Some one want take your credential"
+          };
+        });
+        setRedirect(true);
+      });
   }
 
   function handleInputChange(event) {
-      event.persist();
-      const {name, value} = event.target;
+    event.persist();
+    const { name, value } = event.target;
 
-      setInputs(inputs => {
-        inputs[name] = value;
-        return inputs;
-      });
+    setInputs(inputs => {
+      inputs[name] = value;
+      return inputs;
+    });
   }
 
   if (redirect) {
