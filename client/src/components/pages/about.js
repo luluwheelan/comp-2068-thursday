@@ -4,13 +4,13 @@ function About() {
   return (
     <div className="container content p-4 bg-light">
       <h1 className="text-center">About Us</h1>
-      <p className="h5 pt-5">This is JavaScript Frameworks Group Two lab. </p>
+      <p className="h5 pt-5">This is JavaScript Frameworks Group One lab three. </p>
       <p className="h5">
         This project is built on React framework integrated with Node and
         Express Js.
       </p>
       <br />
-      <p className="h5">Group Two has two members:</p>
+      <p className="h5">Group One has two members:</p>
       <div className="row py-3">
         <div className="col-sm-3">
           <img
